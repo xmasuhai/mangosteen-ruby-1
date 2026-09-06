@@ -9,6 +9,7 @@
 #
 
 require "rubygems"
+require "rubygems/source"
 
 m = Module.new do
   module_function
