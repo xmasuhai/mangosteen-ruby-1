@@ -1,3 +1,5 @@
+source "https://mirrors.ustc.edu.cn/rubygems/"
+source "https://mirrors.tuna.tsinghua.edu.cn/rubygems/"
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
@@ -32,6 +34,8 @@ gem "bootsnap", require: false
 gem 'kaminari'
 
 group :development, :test do
+  gem 'rspec-rails', '~> 8.0.0'
+
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ], require: "debug/prelude"
 
