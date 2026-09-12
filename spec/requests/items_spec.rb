@@ -1,22 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe "Items", type: :request do
-  describe "GET /items" do
-    it "works! (now write some real specs)" do
+  describe "index by page" do
+    it "验证了共11条数据，每页10条" do
       11.times do
-        Item.new amount: 100
+        Item.create amount: 100
       end
-      p "11.times------------------"
-      p Item
-      p "------------------11.times"
-      expect(Item.count).to eq(11)
+      expect(Item.count).to eq 11
       get '/api/v1/items'
-      expect(response).to have_http_status(200)
-      p "response------------------"
-      p response.body
-      p "------------------response"
-      json = JSON.parse(response.body)
-      expect(json['resources'].size).to eq(10)
+      expect(response).to have_http_status 200
+      json = JSON.parse response.body
+      expect(json['resources'].size).to eq 10
+
+      get '/api/v1/items?page=2'
+      expect(response).to have_http_status 200
+      json = JSON.parse response.body
+      expect(json['resources'].size).to eq 1
+    end
+  end
+
+  describe "create" do
+    it "can create a item" do
+      expect {
+        post '/api/v1/items', params: { amount: 99 }
+      }.to  change { Item.count }.by +1
+      expect(response).to have_http_status 200
+      json = JSON.parse response.body
+      expect(json['resource']['id']).to be_an(Numeric)
+      expect(json['resource']['amount']).to eq 99
     end
   end
 end
