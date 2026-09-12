@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "hiddenItems": [
+    {
+      "path": "/root/repos/mangosteen-ruby-1/.github",
+      "name": ".github",
+      "type": "folder",
+      "workspaceFolder": "/root/repos/mangosteen-ruby-1",
+      "children": [
+        "/root/repos/mangosteen-ruby-1/.github/dependabot.yml",
+        "/root/repos/mangosteen-ruby-1/.github/workflows",
+        "/root/repos/mangosteen-ruby-1/.github/workflows/ci.yml"
+      ]
+    }
+  ]
+}
