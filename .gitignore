@@ -32,8 +32,12 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+# IDE
 .idea
 .vscode
-.rubymate
+# plugin
 .ai
 .junie
+.rubymate
+.ruby-lsp
+tmp
