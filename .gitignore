@@ -40,3 +40,5 @@
 .junie
 .rubymate
 .ruby-lsp
+
+/config/credentials/production.key
