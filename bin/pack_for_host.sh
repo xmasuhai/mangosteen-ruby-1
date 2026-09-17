@@ -19,14 +19,19 @@ time=$(date +'%Y%m%d-%H%M%S')
 dist=tmp/mangosteen-$time.tar.gz
 current_dir=$(dirname $0)
 deploy_dir=$BASE_DIR/$dir/mangosteen_deploy
+# 本地缓存的依赖包目录：容器中 vendor/cache 目录的完整路径
+vendor_cache_dir=$current_dir/../vendor/cache
 
 yes | rm tmp/mangosteen-*.tar.gz;
 yes | rm $deploy_dir/mangosteen-*.tar.gz;
 
 # 打包排除目录
 tar --exclude="tmp/cache/*" -czv -f $dist *
-mkdir -p $deploy_dir
+mkdir -p $deploy_dir/vendor/cache
 cp $current_dir/../config/host.Dockerfile $deploy_dir/Dockerfile
+cp $current_dir/../Gemfile $deploy_dir/Gemfile
+cp $current_dir/../Gemfile.lock $deploy_dir/Gemfile.lock
+cp -r $vendor_cache_dir $deploy_dir/vendor/
 cp $current_dir/setup_host.sh $deploy_dir/
 mv $dist $deploy_dir
 echo $time > $deploy_dir/version
