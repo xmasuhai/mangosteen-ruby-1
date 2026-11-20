@@ -1,4 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "from@example.com"
+  # default from: -> { smtp_settings[:user_name].presence || "xmasuhai@qq.com" }
+  default from: "xmasuhai@qq.com"
   layout "mailer"
 end
