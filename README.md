@@ -26,6 +26,22 @@ docker run -d --name db-for-mangosteen -e POSTGRES_USER=mangosteen -e POSTGRES_P
 docker start db-for-mangosteen
 ```
 
+## 启动本地服务
+
+```zsh
+bin/rails s
+```
+
+- 默认端口 `3000` 转发 `http://127.0.0.1:3000`
+
+> 本地启动控制台运行命令
+
+```zsh
+bin/rails c
+```
+
+---
+
 * How to run the test suite
 
 * Services (job queues, cache servers, search engines, etc.)
@@ -33,3 +49,6 @@ docker start db-for-mangosteen
 * Deployment instructions
 
 * ...
+
+---
+---
