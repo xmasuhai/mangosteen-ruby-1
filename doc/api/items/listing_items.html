@@ -117,7 +117,9 @@ table th, table td {
           <h3>Request</h3>
 
             <h4>Headers</h4>
-            <pre class="request headers">Host: example.org
+            <pre class="request headers">Accept: application/json
+Content-Type: application/json
+Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
@@ -134,15 +136,23 @@ x-content-type-options: nosniff
 x-permitted-cross-domain-policies: none
 referrer-policy: strict-origin-when-cross-origin
 content-type: application/json; charset=utf-8
+vary: Accept
 etag: W/&quot;bf702ba9291e498576803fbd69ad7615&quot;
 cache-control: max-age=0, private, must-revalidate
-x-request-id: 8471328b-9771-4015-8617-3b0cc9ee574e
-x-runtime: 0.021881
+x-request-id: 23c93bd1-c2b4-46f3-a5d3-36acc81d98a0
+x-runtime: 0.014797
 content-length: 63</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>
-              <pre class="response body">[binary data]</pre>
+              <pre class="response body">{
+  &quot;resources&quot;: [],
+  &quot;pager&quot;: {
+    &quot;page&quot;: null,
+    &quot;per_page&quot;: 100,
+    &quot;count&quot;: 0
+  }
+}</pre>
       </div>
     </div>
   </body>
