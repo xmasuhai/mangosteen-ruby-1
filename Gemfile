@@ -32,7 +32,7 @@ gem "bootsnap", require: false
 # gem "rack-cors"
 
 gem "kaminari"
-gem "rspec_api_documentation"
+gem "rspec_api_documentation", path: "./vendor/rspec_api_documentation"
 
 group :development, :test do
   gem "rspec-rails", "~> 8.0.0"

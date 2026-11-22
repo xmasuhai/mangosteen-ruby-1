@@ -1,3 +1,11 @@
+PATH
+  remote: vendor/rspec_api_documentation
+  specs:
+    rspec_api_documentation (6.1.0)
+      activesupport (>= 3.0.0)
+      mustache (~> 1.0, >= 0.99.4)
+      rspec (~> 3.0)
+
 GEM
   remote: https://mirrors.ustc.edu.cn/rubygems/
   specs:
@@ -234,10 +242,6 @@ GEM
       rspec-mocks (>= 3.13.0, < 5.0.0)
       rspec-support (>= 3.13.0, < 5.0.0)
     rspec-support (3.13.7)
-    rspec_api_documentation (6.1.0)
-      activesupport (>= 3.0.0)
-      mustache (~> 1.0, >= 0.99.4)
-      rspec (~> 3.0)
     rubocop (1.90.0)
       json (>= 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -297,7 +301,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 7.2.3, >= 7.2.3.2)
   rspec-rails (~> 8.0.0)
-  rspec_api_documentation
+  rspec_api_documentation!
   rubocop-rails-omakase
   tzinfo-data
 
