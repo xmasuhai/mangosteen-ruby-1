@@ -1,6 +1,6 @@
 source "https://mirrors.ustc.edu.cn/rubygems/"
-source "https://mirrors.tuna.tsinghua.edu.cn/rubygems/"
-source "https://rubygems.org"
+# source "https://mirrors.tuna.tsinghua.edu.cn/rubygems/"
+# source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.3", ">= 7.2.3.2"
@@ -31,10 +31,11 @@ gem "bootsnap", require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
 
-gem 'kaminari'
+gem "kaminari"
+gem "rspec_api_documentation"
 
 group :development, :test do
-  gem 'rspec-rails', '~> 8.0.0'
+  gem "rspec-rails", "~> 8.0.0"
 
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ], require: "debug/prelude"
@@ -44,5 +45,4 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-
 end
