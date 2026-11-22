@@ -9,6 +9,10 @@ resource "验证码api" do
     example "请求发送验证码" do
       do_request
       expect(status).to eq 200
+      # jsStr = JSON.parse response_body
+      # p jsStr
+      # 不直接在文档中展示验证码，只返回状态码即可
+      expect(response_body).to eq " "
     end
   end
 end
