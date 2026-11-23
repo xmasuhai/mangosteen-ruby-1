@@ -1,4 +1,16 @@
 class ValidationCode < ApplicationRecord
   # email必填
   validates :email, presence: true
+  # 钩子函数
+  after_initialize :generate_code
+  # 保存成功后执行
+  after_create :send_email
+
+  def generate_code
+    self.code = SecureRandom.random_number.to_s[2..7]
+  end
+
+  def send_email
+    UserMailer.welcome_email(self.email)
+  end
 end
