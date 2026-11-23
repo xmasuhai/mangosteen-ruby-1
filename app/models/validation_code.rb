@@ -2,7 +2,7 @@ class ValidationCode < ApplicationRecord
   # email必填
   validates :email, presence: true
   # 钩子函数
-  after_initialize :generate_code
+  before_create :generate_code
   # 保存成功后执行
   after_create :send_email
 
