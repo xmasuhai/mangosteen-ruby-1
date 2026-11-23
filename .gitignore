@@ -44,3 +44,6 @@
 
 /config/credentials/production.key
 /vendor/cache
+/.gem_rbs_collection/
+/vendor/rspec_api_documentation/.gem_rbs_collection/
+/vendor/rspec_api_documentation/example/
