@@ -65,7 +65,7 @@ bin/rails c
 
 ---
 
-## 启动测试
+## 启动测试，并且生成api文档
 
 ```zsh
 bin/rake docs:generate
