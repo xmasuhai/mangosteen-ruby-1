@@ -1,10 +1,7 @@
 class UserMailer < ApplicationMailer
-  # default from: "notifications@example.com"
-
-  def welcome_email(code)
-    # @user = params[:user]
-    # @url  = "http://example.com/login"
-    @code = code
-    mail(to: "xmasuhai@qq.com", subject: "hi")
+  def welcome_email(email)
+    validation_code = ValidationCode.find_by_email(email)
+    @code = validation_code
+    mail(to: email | "xmasuhai@qq.com", subject: "山竹记账验证码")
   end
 end
