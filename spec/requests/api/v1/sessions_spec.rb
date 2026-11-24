@@ -7,7 +7,7 @@ RSpec.describe "Api::V1::Sessions", type: :request do
       post '/api/v1/session', params: { email: 'xmasuhai@163.com', code: '123456' }
       expect(response).to have_http_status(200)
       json = JSON.parse response.body
-      expect(json["jwt"]).to be_a_(String)
+      expect(json["jwt"]).to be_a(String)
     end
   end
 end
