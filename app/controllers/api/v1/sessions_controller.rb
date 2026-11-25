@@ -1,3 +1,4 @@
+require 'jwt'
 class Api::V1::SessionsController < ApplicationController
   def create
     # 如果是测试环境，则跳过验证码查找
@@ -12,7 +13,10 @@ class Api::V1::SessionsController < ApplicationController
     if user.nil?
       render status: :not_found, json: { errors: "用户不存在" }
     else
-      render status: :ok, json: { jwt: "xxxxxxxxxx" }
+      payload = { user_id: user.id }
+      hmac_secret = 'my$ecretK3y'
+      token = JWT.encode(payload, hmac_secret, 'HS256')
+      render status: :ok, json: { jwt: token }
     end
   end
 end
