@@ -1,5 +1,10 @@
-require 'jwt'
+require "jwt"
+
 class Api::V1::SessionsController < ApplicationController
+  # 创建会话
+  # @return [String] jwt
+  # @return [String] errors
+  # @return [Integer] status
   def create
     # 如果是测试环境，则跳过验证码查找
     if Rails.env.test?
@@ -14,8 +19,8 @@ class Api::V1::SessionsController < ApplicationController
       render status: :not_found, json: { errors: "用户不存在" }
     else
       payload = { user_id: user.id }
-      hmac_secret = 'my$ecretK3y'
-      token = JWT.encode(payload, hmac_secret, 'HS256')
+      hmac_secret = "my$ecretK3y"
+      token = JWT.encode(payload, hmac_secret, "HS256")
       render status: :ok, json: { jwt: token }
     end
   end

@@ -33,9 +33,12 @@ gem "bootsnap", require: false
 
 gem "kaminari"
 gem "rspec_api_documentation", path: "./vendor/rspec_api_documentation"
-gem 'jwt'
+gem "jwt"
+gem "docscribe"
 
 group :development, :test do
+  gem "rubocop"
+
   gem "rspec-rails", "~> 8.0.0"
 
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
