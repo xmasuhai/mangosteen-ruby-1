@@ -84,6 +84,15 @@ npx http-server .
 
 ---
 
+## 密钥操作
+
+- 编辑密钥（新版） `VISUAL="code --wait" rails credentials:edit`
+- 编辑密钥（旧版） `EDITOR="code --wait" rails credentials:edit`
+- 编辑临时文件 `/tmp/YYYYMMDD-xxxxxx-vde7sg-credentials.yml`
+- 完成后保存退出，自动更新 `config/credentials.yml.enc`
+
+---
+
 * How to run the test suite
 
 * Services (job queues, cache servers, search engines, etc.)
