@@ -10,19 +10,11 @@ class Api::V1::MesController < ApplicationController
     # 去除Bearer
     jwt = authorization.split(" ")[1] rescue ""
     # decode jwt
-    payload = JWT.decode jwt,
-      Rails.application.credentials.hmac_secret,
-      true, { algorithm: "HS256" } rescue nil
-    if payload.nil?
-      render status: :unauthorized, json: { errors: "Invalid JWT" }
-      return
-    end
+    payload = JWT.decode jwt, Rails.application.credentials.hmac_secret, true, { algorithm: "HS256" } rescue nil
+    return render status: :unauthorized, json: { errors: "Invalid JWT" } if payload.nil?
     user_id = payload[0]["user_id"] rescue nil
     currentUser = User.find user_id
-    if currentUser.nil?
-      render status: :unauthorized, json: { errors: "Invalid JWT" }
-      return
-    end
+    return render status: :unauthorized, json: { errors: "Invalid JWT" } if currentUser.nil?
     render json: { resource: currentUser }
   end
 end
