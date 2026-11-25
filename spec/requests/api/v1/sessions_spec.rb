@@ -9,7 +9,7 @@ RSpec.describe "Api::V1::Sessions", type: :request do
       expect(response).to have_http_status(200)
       json = JSON.parse response.body
 
-      hmac_secret = Rails.application.credentials.secret_key_base
+      hmac_secret = Rails.application.credentials.hmac_secret
       decoded_token = JWT.decode json["jwt"],
         hmac_secret, true, { algorithm: 'HS256' }
       p("jwt_______________________")
