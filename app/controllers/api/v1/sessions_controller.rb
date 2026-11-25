@@ -19,7 +19,7 @@ class Api::V1::SessionsController < ApplicationController
       render status: :not_found, json: { errors: "用户不存在" }
     else
       payload = { user_id: user.id }
-      hmac_secret = "my$ecretK3y"
+      hmac_secret = Rails.application.credentials.secret_key_base
       token = JWT.encode(payload, hmac_secret, "HS256")
       render status: :ok, json: { jwt: token }
     end

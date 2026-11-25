@@ -8,8 +8,10 @@ RSpec.describe "Api::V1::Sessions", type: :request do
         params: { email: 'xmasuhai@163.com', code: '123456' }
       expect(response).to have_http_status(200)
       json = JSON.parse response.body
+
+      hmac_secret = Rails.application.credentials.secret_key_base
       decoded_token = JWT.decode json["jwt"],
-        "my$ecretK3y", true, { algorithm: 'HS256' }
+        hmac_secret, true, { algorithm: 'HS256' }
       p("jwt_______________________")
       p json["jwt"]
       jwt_parts = json["jwt"].split(".")
