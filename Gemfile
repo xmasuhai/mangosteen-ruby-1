@@ -1,5 +1,5 @@
-source "https://mirrors.ustc.edu.cn/rubygems/"
-# source "https://mirrors.tuna.tsinghua.edu.cn/rubygems/"
+# source "https://mirrors.ustc.edu.cn/rubygems/"
+source "https://mirrors.tuna.tsinghua.edu.cn/rubygems/"
 # source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
@@ -33,6 +33,7 @@ gem "bootsnap", require: false
 
 gem "kaminari"
 gem "rspec_api_documentation", path: "./vendor/rspec_api_documentation"
+gem 'jwt'
 
 group :development, :test do
   gem "rspec-rails", "~> 8.0.0"
