@@ -1,4 +1,6 @@
 require 'rspec_api_documentation'
+require_relative './support/rspec_request_test_helper'
+
 RspecApiDocumentation.configure do |config|
   # config.format = :json
   # config.response_body_formatter = Proc.new { |response_content_type, response_body| response_body }
@@ -21,6 +23,9 @@ end
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  # 类型为request的测试用例引入 RequestTestHelper 模块，可以使用其中的方法 sign_in
+  config.include RequestTestHelper, type: :request
+
   config.before(:each) do |spec|
     if spec.metadata[:type].equal? :acceptance
       require_relative './support/rspec_api_documentation'
