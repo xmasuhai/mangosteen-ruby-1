@@ -19,9 +19,10 @@ RSpec.describe "Api::V1::Items", type: :request do
       expect(json['resources'].size).to eq 1
     end
     it "按日期筛选" do
-      item1 = Item.create amount: 100, created_at: Time.new(2026, 1, 2)
-      item2 = Item.create amount: 100, created_at: Time.new(2026, 1, 3)
-      item3 = Item.create amount: 100, created_at: Time.new(2026, 3, 1)
+      # item1 = Item.create amount: 100, created_at: Time.new(2026, 1, 2)
+      item1 = Item.create amount: 100, created_at: "2026-01-02"
+      item2 = Item.create amount: 100, created_at: "2026-02-01"
+      item3 = Item.create amount: 100, created_at: "2026-02-02"
       get '/api/v1/items?created_after=2026-01-01&created_before=2026-02-01'
       expect(response).to have_http_status :ok
       json = JSON.parse response.body
@@ -30,6 +31,17 @@ RSpec.describe "Api::V1::Items", type: :request do
       expect(json['resources'][1]['id']).to eq item2.id
       expect(json['resources'][0]['id']).not_to eq item2.id
       expect(json['resources'][0]['id']).not_to eq item3.id
+    end
+    it "按日期筛选（边界条件）" do
+      # item1 = Item.create amount: 100, created_at: Time.new(2027, 1, 1, 0, 0, 0, "+00:00")
+      # item1 = Item.create amount: 100, created_at: Time.new(2027, 1, 1, 0, 0, 0, "Z")
+      item1 = Item.create amount: 100, created_at: "2027-01-01"
+
+      get '/api/v1/items?created_after=2027-01-01&created_before=2027-01-02'
+      expect(response).to have_http_status :ok
+      json = JSON.parse response.body
+      expect(json['resources'].size).to eq 1
+      expect(json['resources'][0]['id']).to eq item1.id
     end
   end
 
