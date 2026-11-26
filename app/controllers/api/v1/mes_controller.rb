@@ -5,14 +5,13 @@ class Api::V1::MesController < ApplicationController
   # @return [String] errors
   # @return [Integer] status
   def show
-    # get jwt from header
-    authorization = request.headers["Authorization"]
-    # 去除Bearer
-    jwt = authorization.split(" ")[1] rescue ""
-    # decode jwt
-    payload = JWT.decode jwt, Rails.application.credentials.hmac_secret, true, { algorithm: "HS256" } rescue nil
-    return render status: :forbidden, json: { errors: "Invalid JWT" } if payload.nil?
-    user_id = payload[0]["user_id"] rescue nil
+    # authorization = request.headers["Authorization"]
+    # jwt = authorization.split(" ")[1] rescue ""
+    # payload = JWT.decode jwt, Rails.application.credentials.hmac_secret, true, { algorithm: "HS256" } rescue nil
+    # return render status: :forbidden, json: { errors: "Invalid JWT" } if payload.nil?
+    # user_id = payload[0]["user_id"] rescue nil
+
+    user_id = request.env["current_user_id"] rescue nil
     currentUser = User.find user_id
     return render status: :forbidden, json: { errors: "Invalid JWT" } if currentUser.nil?
     render json: { resource: currentUser }
