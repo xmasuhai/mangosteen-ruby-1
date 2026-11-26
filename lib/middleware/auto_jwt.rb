@@ -12,23 +12,11 @@ class AutoJwt
   # @return [Array]
   def call(env)
     header = env["HTTP_AUTHORIZATION"]
-
-    p("AutoJwt_______________________")
-    p env["REQUEST_METHOD"]
-    p env["HTTP_AUTHORIZATION"]
-    p header
-    p("_______________________AutoJwt")
-
     if header.present?
       jwt = header.split(" ")[1] rescue ""
       payload = JWT.decode jwt, Rails.application.credentials.hmac_secret, true, { algorithm: "HS256" }
       env["current_user_id"] = payload[0]["user_id"] rescue nil
     end
-
-    # jwt = header.split(" ")[1] rescue ""
-    # payload = JWT.decode jwt, Rails.application.credentials.hmac_secret, true, { algorithm: "HS256" }
-    # env["current_user_id"] = payload[0]["user_id"] rescue nil
-
     @status, @headers, @response = @app.call(env)
     [ @status, @headers, @response ]
   end
