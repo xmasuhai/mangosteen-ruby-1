@@ -3,17 +3,25 @@ require 'rails_helper'
 RSpec.describe "Api::V1::Items", type: :request do
   describe "账目获取（分页）" do
     it "分页验证" do
-      11.times do
-        Item.create amount: 100
-      end
-      expect(Item.count).to eq 11
+      user1 = User.create email: '1@163.com'
+      user2 = User.create email: '2@163.com'
+      11.times do Item.create amount: 100, user_id: user1.id end
+      5.times do Item.create amount: 100, user_id: user2.id end
+
+      post '/api/v1/session', params: { email: user1.email, code: '123456' }
+      json = JSON.parse response.body
+      jwtString = json["jwt"]
+      headersWithJwt = { "Authorization" => "Bearer #{jwtString}" }
+
       # 不传 page 参数
-      get '/api/v1/items'
+      get '/api/v1/items', headers: headersWithJwt
+
       expect(response).to have_http_status :ok
       json = JSON.parse response.body
       expect(json['resources'].size).to eq 10
       # page=2
-      get '/api/v1/items?page=2'
+      get '/api/v1/items?page=2', headers: headersWithJwt
+
       expect(response).to have_http_status :ok
       json = JSON.parse response.body
       expect(json['resources'].size).to eq 1
