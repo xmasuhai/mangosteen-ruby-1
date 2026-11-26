@@ -13,3 +13,4 @@ AllCops:
     - 'node_modules/**/*'
     - 'vendor/**/*'
     - 'spec/**/*'
+    - '/usr/local/rvm/gems/**/*'

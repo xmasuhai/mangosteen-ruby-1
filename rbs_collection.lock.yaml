@@ -541,6 +541,14 @@ gems:
     revision: 15bda59d611d503740a3d147810595449d1151f9
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
+- name: unicode-display_width
+  version: '3.3'
+  source:
+    type: git
+    name: ruby/gem_rbs_collection
+    revision: 2ae09016cae5c8b26a76a3126575e0875b4e06c3
+    remote: https://github.com/ruby/gem_rbs_collection.git
+    repo_dir: gems
 - name: uri
   version: '0'
   source:
