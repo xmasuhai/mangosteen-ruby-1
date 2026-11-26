@@ -1,7 +1,12 @@
 class Api::V1::ItemsController < ApplicationController
+  # 分页查询账目.
+  #
+  # @return [Object]
   def index
     # item = Item.page(params[:page]).per(100)
-    items = Item.page params[:page]
+    items = Item
+      .where({ created_at: params[:created_after]..params[:created_before] })
+      .page params[:page]
     render json: {
       resources: items,
       pager: {
@@ -12,6 +17,9 @@ class Api::V1::ItemsController < ApplicationController
     }
   end
 
+  # 创建账目.
+  #
+  # @return [Object]
   def create
     item = Item.new amount: params[:amount]
     if item.save
