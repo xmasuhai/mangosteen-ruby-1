@@ -7,7 +7,7 @@ PATH
       rspec (~> 3.0)
 
 GEM
-  remote: https://mirrors.tuna.tsinghua.edu.cn/rubygems/
+  remote: https://mirrors.ustc.edu.cn/rubygems/
   specs:
     actioncable (7.2.3.2)
       actionpack (= 7.2.3.2)
@@ -221,6 +221,9 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.4.2)
+    rbs (3.10.4)
+      logger
+      tsort
     rdoc (7.2.0)
       erb
       psych (>= 4.0.0)
@@ -283,6 +286,8 @@ GEM
     thor (1.5.0)
     timeout (0.6.1)
     tsort (0.2.0)
+    typeprof (0.21.2)
+      rbs (>= 1.8.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.2.0)
@@ -309,10 +314,12 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.2.3, >= 7.2.3.2)
+  rbs
   rspec-rails (~> 8.0.0)
   rspec_api_documentation!
   rubocop
   rubocop-rails-omakase
+  typeprof
   tzinfo-data
 
 BUNDLED WITH
