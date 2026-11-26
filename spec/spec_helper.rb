@@ -1,5 +1,7 @@
 require 'rspec_api_documentation'
-require_relative './support/rspec_request_test_helper'
+
+# 已替换为在 `User` 模型中 `generate_auth_header` 方法
+# require_relative './support/rspec_request_test_helper'
 
 RspecApiDocumentation.configure do |config|
   # config.format = :json
@@ -24,7 +26,8 @@ end
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # 类型为request的测试用例引入 RequestTestHelper 模块，可以使用其中的方法 sign_in
-  config.include RequestTestHelper, type: :request
+  # 已替换为在 `User` 模型中 `generate_auth_header` 方法
+  # config.include RequestTestHelper, type: :request
 
   config.before(:each) do |spec|
     if spec.metadata[:type].equal? :acceptance
