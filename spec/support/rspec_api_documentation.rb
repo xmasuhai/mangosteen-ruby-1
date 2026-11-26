@@ -12,10 +12,11 @@
 # 非 nil 时保持原有 rewind + read 行为。
 module RspecApiDocumentation
   class ClientBase
+    # fix rack.input nil.
+    # @return [Object]
     def read_request_body
       input = last_request.env["rack.input"]
       return "" if input.nil?
-
       input.rewind
       input.read
     end
