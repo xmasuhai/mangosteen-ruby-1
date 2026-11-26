@@ -2,7 +2,15 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::Items", type: :request do
   describe "账目获取（分页）" do
-    it "分页验证" do
+    it "分页验证（未登录）" do
+      user1 = User.create email: '1@163.com'
+      user2 = User.create email: '2@163.com'
+      11.times do Item.create amount: 100, user_id: user1.id end
+      5.times do Item.create amount: 100, user_id: user2.id end
+      get '/api/v1/items'
+      expect(response).to have_http_status :forbidden
+    end
+    it "分页验证（已登录）" do
       user1 = User.create email: '1@163.com'
       user2 = User.create email: '2@163.com'
       11.times do Item.create amount: 100, user_id: user1.id end
