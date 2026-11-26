@@ -35,11 +35,19 @@ RSpec.describe "Api::V1::Items", type: :request do
       expect(json['resources'].size).to eq 1
     end
     it "按日期筛选" do
+      user = User.create email: '1@163.com'
       # item1 = Item.create amount: 100, created_at: Time.new(2026, 1, 2)
-      item1 = Item.create amount: 100, created_at: "2026-01-02"
-      item2 = Item.create amount: 100, created_at: "2026-02-01"
-      item3 = Item.create amount: 100, created_at: "2026-02-02"
-      get '/api/v1/items?created_after=2026-01-01&created_before=2026-02-01'
+      item1 = Item.create amount: 100, created_at: "2026-01-02", user_id: user.id
+      item2 = Item.create amount: 100, created_at: "2026-02-01", user_id: user.id
+      item3 = Item.create amount: 100, created_at: "2026-02-02", user_id: user.id
+
+      post '/api/v1/session', params: { email: user.email, code: '123456' }
+      json = JSON.parse response.body
+      jwtString = json["jwt"]
+      headersWithJwt = { "Authorization" => "Bearer #{jwtString}" }
+
+      get '/api/v1/items?created_after=2026-01-01&created_before=2026-02-01',
+        headers: headersWithJwt
       expect(response).to have_http_status :ok
       json = JSON.parse response.body
       expect(json['resources'].size).to eq 2
@@ -49,19 +57,35 @@ RSpec.describe "Api::V1::Items", type: :request do
       expect(json['resources'][0]['id']).not_to eq item3.id
     end
     it "按日期筛选（边界条件：时区）" do
+      user = User.create email: '1@163.com'
+
       # item1 = Item.create amount: 100, created_at: Time.new(2027, 1, 1, 0, 0, 0, "+00:00")
       # item1 = Item.create amount: 100, created_at: Time.new(2027, 1, 1, 0, 0, 0, "Z")
-      item1 = Item.create amount: 100, created_at: "2027-01-01"
-      get '/api/v1/items?created_after=2027-01-01&created_before=2027-01-02'
+      item1 = Item.create amount: 100, created_at: "2027-01-01", user_id: user.id
+
+      post '/api/v1/session', params: { email: user.email, code: '123456' }
+      json = JSON.parse response.body
+      jwtString = json["jwt"]
+      headersWithJwt = { "Authorization" => "Bearer #{jwtString}" }
+
+      get '/api/v1/items?created_after=2027-01-01&created_before=2027-01-02',
+        headers: headersWithJwt
       expect(response).to have_http_status :ok
       json = JSON.parse response.body
       expect(json['resources'].size).to eq 1
       expect(json['resources'][0]['id']).to eq item1.id
     end
     it "按日期筛选（边界条件：开始日期范围未传参完整）" do
-      item1 = Item.create amount: 100, created_at: "2027-01-01"
-      item2 = Item.create amount: 100, created_at: "2026-12-01"
-      get '/api/v1/items?created_after=2027-01-01'
+      user = User.create email: '1@163.com'
+      item1 = Item.create amount: 100, created_at: "2027-01-01", user_id: user.id
+      item2 = Item.create amount: 100, created_at: "2026-12-01", user_id: user.id
+
+      post '/api/v1/session', params: { email: user.email, code: '123456' }
+      json = JSON.parse response.body
+      jwtString = json["jwt"]
+      headersWithJwt = { "Authorization" => "Bearer #{jwtString}" }
+
+      get '/api/v1/items?created_after=2027-01-01', headers: headersWithJwt
       expect(response).to have_http_status :ok
       json = JSON.parse response.body
       expect(json['resources'].size).to eq 1
@@ -69,9 +93,17 @@ RSpec.describe "Api::V1::Items", type: :request do
       expect(json['resources'][0]['id']).not_to eq item2.id
     end
     it "按日期筛选（边界条件：结束日期范围未传参完整）" do
-      item1 = Item.create amount: 100, created_at: "2027-01-01"
-      item2 = Item.create amount: 100, created_at: "2027-02-01"
-      get '/api/v1/items?created_before=2027-01-02'
+      user = User.create email: '1@163.com'
+
+      item1 = Item.create amount: 100, created_at: "2027-01-01", user_id: user.id
+      item2 = Item.create amount: 100, created_at: "2027-02-01", user_id: user.id
+
+      post '/api/v1/session', params: { email: user.email, code: '123456' }
+      json = JSON.parse response.body
+      jwtString = json["jwt"]
+      headersWithJwt = { "Authorization" => "Bearer #{jwtString}" }
+
+      get '/api/v1/items?created_before=2027-01-02', headers: headersWithJwt
       expect(response).to have_http_status :ok
       json = JSON.parse response.body
       expect(json['resources'].size).to eq 1
