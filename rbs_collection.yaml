@@ -17,3 +17,15 @@ path: .gem_rbs_collection
 #   # If you want to avoid installing rbs files for gems, you can specify them here.
 #   - name: GEM_NAME
 #     ignore: true
+
+# 1.Ruby TypeProf
+# 2.Install Ruby TypeProf VSCode Integration
+# 3.Open your project's directory by VSCode
+# 4.Open the terminal
+# 5.Install Ruby 3.1.0 or later
+# 6.Add gem "typeprof" to Gemfile
+# 7.execute bundle install
+# 8.execute rbs collection init
+# 9.execute rbs collection install
+# 10.open the rbswiki folder by VSCode
+# 11.Edit typeprof.rbs
