@@ -16,15 +16,15 @@ RSpec.describe "Api::V1::Items", type: :request do
       11.times do Item.create amount: 100, user_id: user1.id end
       5.times do Item.create amount: 100, user_id: user2.id end
 
-      headersWithJwt = sign_in user1
       # 不传 page 参数
-      get '/api/v1/items', headers: headersWithJwt
+      get '/api/v1/items', headers: user1.generate_auth_header
+
       expect(response).to have_http_status :ok
       json = JSON.parse response.body
       expect(json['resources'].size).to eq 10
 
       # page=2
-      get '/api/v1/items?page=2', headers: headersWithJwt
+      get '/api/v1/items?page=2', headers: user1.generate_auth_header
       expect(response).to have_http_status :ok
       json = JSON.parse response.body
       expect(json['resources'].size).to eq 1
@@ -35,10 +35,9 @@ RSpec.describe "Api::V1::Items", type: :request do
       item1 = Item.create amount: 100, created_at: "2026-01-02", user_id: user.id
       item2 = Item.create amount: 100, created_at: "2026-02-01", user_id: user.id
       item3 = Item.create amount: 100, created_at: "2026-02-02", user_id: user.id
-      headersWithJwt = sign_in user
 
       get '/api/v1/items?created_after=2026-01-01&created_before=2026-02-01',
-        headers: headersWithJwt
+        headers: user.generate_auth_header
       expect(response).to have_http_status :ok
       json = JSON.parse response.body
       expect(json['resources'].size).to eq 2
@@ -52,10 +51,10 @@ RSpec.describe "Api::V1::Items", type: :request do
       # item1 = Item.create amount: 100, created_at: Time.new(2027, 1, 1, 0, 0, 0, "+00:00")
       # item1 = Item.create amount: 100, created_at: Time.new(2027, 1, 1, 0, 0, 0, "Z")
       item1 = Item.create amount: 100, created_at: "2027-01-01", user_id: user.id
-      headersWithJwt = sign_in user
 
       get '/api/v1/items?created_after=2027-01-01&created_before=2027-01-02',
-        headers: headersWithJwt
+        headers: user.generate_auth_header
+
       expect(response).to have_http_status :ok
       json = JSON.parse response.body
       expect(json['resources'].size).to eq 1
@@ -65,9 +64,8 @@ RSpec.describe "Api::V1::Items", type: :request do
       user = User.create email: '1@163.com'
       item1 = Item.create amount: 100, created_at: "2027-01-01", user_id: user.id
       item2 = Item.create amount: 100, created_at: "2026-12-01", user_id: user.id
-      headersWithJwt = sign_in user
 
-      get '/api/v1/items?created_after=2027-01-01', headers: headersWithJwt
+      get '/api/v1/items?created_after=2027-01-01', headers: user.generate_auth_header
       expect(response).to have_http_status :ok
       json = JSON.parse response.body
       expect(json['resources'].size).to eq 1
@@ -78,9 +76,8 @@ RSpec.describe "Api::V1::Items", type: :request do
       user = User.create email: '1@163.com'
       item1 = Item.create amount: 100, created_at: "2027-01-01", user_id: user.id
       item2 = Item.create amount: 100, created_at: "2027-02-01", user_id: user.id
-      headersWithJwt = sign_in user
 
-      get '/api/v1/items?created_before=2027-01-02', headers: headersWithJwt
+      get '/api/v1/items?created_before=2027-01-02', headers: user.generate_auth_header
       expect(response).to have_http_status :ok
       json = JSON.parse response.body
       expect(json['resources'].size).to eq 1
