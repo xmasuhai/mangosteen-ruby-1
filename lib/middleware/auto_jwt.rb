@@ -14,17 +14,16 @@ class AutoJwt
   # @return [Array]
   def call(env)
     # 跳过 JWT 解析
-    return @app.call(env) if SKIP_JWT_PATHS.include?(env["PATH_INFO"])
-
+    return @app.call(env) if SKIP_JWT_PATHS.include? env["PATH_INFO"]
     header = env["HTTP_AUTHORIZATION"]
     if header.present?
       jwt = header.split(" ")[1] rescue ""
       begin
       payload = JWT.decode jwt, Rails.application.credentials.hmac_secret, true, { algorithm: "HS256" }
       rescue JWT::ExpiredSignature
-        return [ :unauthorized, {}, [ JSON.generate({ reason: "Unauthorized, Token expired" }) ] ]
+        return [ Rack::Utils.status_code(:unauthorized), {}, [ JSON.generate({ reason: "Unauthorized, Token expired" }) ] ]
       rescue
-        return [ :unauthorized, {}, [ JSON.generate({ reason: "Unauthorized, Invalid JWT" }) ] ]
+        return [ Rack::Utils.status_code(:unauthorized), {}, [ JSON.generate({ reason: "Unauthorized, Invalid JWT" }) ] ]
       end
       env["current_user_id"] = payload[0]["user_id"] rescue nil
     end
