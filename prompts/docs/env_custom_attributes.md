@@ -22,7 +22,7 @@
 | **消费代码位置** | `app/controllers/api/v1/mes_controller.rb:8` (`Api::V1::MesController#show`) |
 | **读取方式** | `request.env["current_user_id"]` 或 `env["current_user_id"]` |
 | **示例值** | `42` (用户 ID), `nil` (无有效 JWT 或无 Authorization 头) |
-| **注意事项** | - 仅在 JWT 合法且包含 `user_id` 时写入<br>- JWT 解码失败或 payload 无 `user_id` 时写入 `nil`<br>- 中间件不拦截请求，始终调用 `@app.call(env)` 继续执行<br>- 控制器需自行处理 `nil` 情况（如返回 403） |
+| **注意事项** | - 仅在 JWT 合法且包含 `user_id` 时写入<br>- JWT 解码失败或 payload 无 `user_id` 时写入 `nil`<br>- 中间件不拦截请求，始终调用 `@app.call(env)` 继续执行<br>- 控制器需自行处理 `nil` 情况（如返回 401） |
 
 **写入逻辑源码**：
 ```ruby
@@ -40,7 +40,7 @@ end
 # app/controllers/api/v1/mes_controller.rb:8-10
 user_id = request.env["current_user_id"] rescue nil
 currentUser = User.find user_id
-return render status: :forbidden, json: { errors: "Invalid JWT" } if currentUser.nil?
+return render status: :unauthorized, json: { errors: "Invalid JWT" } if currentUser.nil?
 ```
 
 ---

@@ -4,7 +4,7 @@ class Api::V1::ItemsController < ApplicationController
   # @return [Object]
   def index
     current_user_id = request.env["current_user_id"]
-    return render status: :forbidden, json: { errors: "Invalid JWT" } if current_user_id.nil?
+    return render status: :unauthorized, json: { errors: "Invalid JWT" } if current_user_id.nil?
     items = Item
       .where(user_id: current_user_id)
       .where({ created_at: params[:created_after]..params[:created_before] })

@@ -7,7 +7,7 @@ class Api::V1::MesController < ApplicationController
   def show
     user_id = request.env["current_user_id"] rescue nil
     currentUser = User.find user_id
-    return render status: :forbidden, json: { errors: "Invalid JWT" } if currentUser.nil?
+    return render status: :unauthorized, json: { errors: "Invalid JWT" } if currentUser.nil?
     render json: { resource: currentUser }
   end
 end

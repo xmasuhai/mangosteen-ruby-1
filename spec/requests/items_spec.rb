@@ -8,7 +8,7 @@ RSpec.describe "Api::V1::Items", type: :request do
       11.times do Item.create amount: 100, user_id: user1.id end
       5.times do Item.create amount: 100, user_id: user2.id end
       get '/api/v1/items'
-      expect(response).to have_http_status :forbidden
+      expect(response).to have_http_status :unauthorized
     end
     it "分页验证（已登录）" do
       user1 = User.create email: '1@163.com'
