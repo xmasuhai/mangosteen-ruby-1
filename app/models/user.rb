@@ -4,7 +4,7 @@ class User < ApplicationRecord
   # User 自己生成 JWT.
   # @return [String]
   def generate_jwt
-    payload = { user_id: self.id, email: self.email }
+    payload = { user_id: self.id, email: self.email, exp: (Time.now + 2.hours).to_i }
     hmac_secret = Rails.application.credentials.hmac_secret
     JWT.encode(payload, hmac_secret, "HS256")
   end
