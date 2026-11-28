@@ -11,6 +11,7 @@ class AutoJwt
   # 从请求头中获取 jwt，并解析.
   # @param [Object] env Param documentation.
   # @raise [StandardError]
+  # @raise [JWT::ExpiredSignature]
   # @return [Array]
   def call(env)
     # 跳过 JWT 解析
