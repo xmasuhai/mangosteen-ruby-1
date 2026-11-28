@@ -8,11 +8,8 @@ resource "会话" do
     response_field :jwt, "JWT，用于验证用户身份的 token"
     let(:email) { "1@qq.com" }
     let(:code) { "123456" }
-
     example "登录" do
-      User.create email: email
       do_request
-      # expect(status).to eq 200
       expect(status).to eq Rack::Utils.status_code(:ok)
       json = JSON.parse response_body
       expect(json["jwt"]).to be_a String
